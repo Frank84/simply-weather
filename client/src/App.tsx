@@ -10,18 +10,34 @@ import defaultBackgroundImage from './images/background.png';
 import { getRandomInt } from './utilities/utils';
 
 function App() {
-  const [currentLocation, setCurrentLocation] = useState('');
+  //
+  // Constants
+  //
+
+  // Contains all the weather information displayed in the app
   const [currentWeather, setCurrentWeather] = useState({
     current: {},
     historical: {},
     location: { name: '' },
   });
+  // Keep a string of the current location name
+  const [currentLocation, setCurrentLocation] = useState('');
+  // use when calling the api to pass the selected degree format
   const [degreeUnit, setDegreeUnit] = useState('c');
+  // use to show/hide the weather details component
   const [isError, setIsError] = useState(false);
+  // display a spinner in the input when searching for location
   const [loading, setLoading] = useState(false);
+  // path for the background image is taken from Unsplash API with the location query 
   const [locationBackgroundImage, setLocationBackgroundImage] = useState('');
+  // use to show/hide the overlay menu to submit a new location
   const [menuOpen, setMenuOpen] = useState(false);
+  // the current value of the input to submit a new location
   const [submitValue, setSubmitValue] = useState('');
+
+  //
+  // API functions
+  //
 
   async function getWeather(query: string) {
     // Getting weather forecast and historical data using WeatherStack API.
@@ -43,11 +59,24 @@ function App() {
         return response;
       }).then((returnedResponse) => {
         returnedResponse.json()
-          .then((parsedJson) => {
-            const results = parsedJson.results;
-            setCurrentWeather({ current: results.current, location: results.location, historical: results.historical });
-            setCurrentLocation(results.location.name);
-          });
+        .then((parsedJson) => {
+          // the api only return a success property if when it fails.
+          if (parsedJson.results.success || parsedJson.results.success === false) {
+            // Both errors are returned when the API when the query fails.
+            // For these two code, we throw an error regarding the query.
+            const code = parsedJson.results.error.code;
+            if (code === 615 || code === 400) {
+              setIsError(true);
+              return console.error('Something wrong with the query requested');
+            }
+          }
+          const results = parsedJson.results;
+          setCurrentWeather({ 
+            current: results.current, 
+            location: results.location, 
+            historical: results.historical });
+          setCurrentLocation(results.location.name);
+        });
       }).catch((error) => {
         setIsError(true);
         console.error(error);
@@ -75,22 +104,9 @@ function App() {
     }
   }
 
-  async function searchNewLocation(e: React.SyntheticEvent<EventTarget>) {
-    e.preventDefault();
-    await getWeather(submitValue);
-    setMenuOpen(false);
-  }
-
-  function getStringDays(numberOfdays: Number): string {
-    // This return a string in the format expected by WeatherStack API.
-    // Format: 'YYYY-MM-DD;YYYY-MM-DD...'
-    let range = '';
-    for (let i = 0; i < numberOfdays; i++) {
-      let date = moment().subtract(i, 'days').format('YYYY-MM-DD') + ';';
-      range = range + date;
-    } 
-    return range.substring(0, range.length - 1);
-  }
+  //
+  // UseEffect functions
+  //
 
   useEffect(() => {
     if (currentWeather && currentWeather.location) {
@@ -102,25 +118,47 @@ function App() {
   }, [currentWeather]);
 
   useEffect(() => {
-    var options = {
-        enableHighAccuracy: true,
-        timeout: 5000,
-        maximumWait: 10000,     // max wait time for desired accuracy
-        maximumAge: 0,          // disable cache
-        desiredAccuracy: 30,    // meters
-        fallbackToIP: true,     // fallback to IP if Geolocation fails or rejected
-    };
-    geolocator.locate(options, function (err: any, location: any) {
-        if (err) return console.log(err);
-        if (location && location.address && location.address.city) {
-          getWeather(location.address.city);
-        } else if (location && location.coords) {
-          getWeather(location.coords.latitude + ',' + location.coords.longitude);
-        } else {
-          setMenuOpen(true);
-        }
-    });
+    // first check if location already exists in cache
+    let savedLocation = localStorage.getItem('location');
+    if (savedLocation) {
+      getWeather(savedLocation);
+    } else {
+      // if cache does not exists, try to get location using geolocator
+      var options = {
+          timeout: 5000,
+          maximumWait: 1000,     // max wait time for desired accuracy
+          desiredAccuracy: 5000,    // meters
+          fallbackToIP: true,     // fallback to IP if Geolocation fails or rejected
+      };
+      geolocator.locate(options, function (err: any, location: any) {
+          if (err) return console.log(err);
+          if (!location) {
+            setMenuOpen(true);
+          } else {
+            const query = location.address && location.address.city ? 
+                  location.address.city : location.coords.latitude + ',' + location.coords.longitude;
+            // setting location to cache
+            localStorage.setItem('location', query);  
+            getWeather(query);
+          }
+      });
+    }
   }, []);
+
+  //
+  // Utilities functions
+  //
+
+  function getStringDays(numberOfdays: Number): string {
+    // This return a string in the format expected by WeatherStack API.
+    // Format: 'YYYY-MM-DD;YYYY-MM-DD...'
+    let range = '';
+    for (let i = 0; i < numberOfdays; i++) {
+      let date = moment().subtract(i, 'days').format('YYYY-MM-DD') + ';';
+      range = range + date;
+    } 
+    return range.substring(0, range.length - 1);
+  }
 
   function renderNewLocationForm() {
     return (
@@ -134,6 +172,12 @@ function App() {
         <Icon className={`search-close ${menuOpen ? 'active' : ''}`} onClick={() => { setMenuOpen(false) }} name='close' />
       </div>
     )
+  }
+
+  async function searchNewLocation(e: React.SyntheticEvent<EventTarget>) {
+    e.preventDefault();
+    await getWeather(submitValue);
+    setMenuOpen(false);
   }
 
   return (

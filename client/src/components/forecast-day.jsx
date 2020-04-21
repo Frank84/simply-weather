@@ -11,7 +11,10 @@ import weatherDripIcon from '../images/drip.svg';
 import weatherCloudLightningIcon from '../images/cloud-lightning.svg';
 
 export default function ForecastDay(props) {
+
+  // Array of all different weather icons
   const weatherIcons = [weatherCloudIcon, weatherCloudSunIcon, weatherCloudRainIcon, weatherSunIcon, weatherWindyIcon, weatherDripIcon, weatherCloudLightningIcon];
+  // The current icon for each different day
   const [weatherIcon, setWeatherIcon] = useState();
 
   useEffect(() => {

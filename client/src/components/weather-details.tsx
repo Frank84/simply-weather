@@ -5,12 +5,15 @@ import HistoricWeather from './historic-weather';
 
 export default function WeatherDetails(props) {
   
+  // Props constants coming from App
   const currentWeather = props.currentWeather;
   const {degreeUnit, setDegreeUnit} = props.degreeUnit;
   const getWeather = props.getWeather;
   const [weatherDisplayMode, setWeatherDisplayMode] = useState('forecast');
 
   useEffect(() => {
+    // Make another call to the weather api when the degree unit changed
+    // then switch back the mode to forecast.
     if (currentWeather && currentWeather.location) {
       getWeather(currentWeather.location.name);
       setWeatherDisplayMode('forecast');
