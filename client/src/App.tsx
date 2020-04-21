@@ -34,7 +34,7 @@ function App() {
     setIsError(false);
     setLoading(true);
     const range = getStringDays(30);
-    await fetch(`${process.env.REACT_APP_API_ENDPOINT}/weather/historical?t=${range}&q=${query}&unit=${degreeUnit}`)
+    await fetch(`/weather/historical?t=${range}&q=${query}&unit=${degreeUnit}`)
       .then((response) => {
         if (response.status >= 400 && response.status < 600) {
           setIsError(true);
@@ -60,7 +60,7 @@ function App() {
     // Try to get a background image based on the city selected using Unsplash API.
     // Use Unsplash API. If no result found, or error, use default background image. 
     try {
-      const apiQuery = await fetch(`${process.env.REACT_APP_API_ENDPOINT}/images?q=${query}`);
+      const apiQuery = await fetch(`/images?q=${query}`);
       const parsedJson = await apiQuery.json();
       if (parsedJson && parsedJson.results && parsedJson.results.results) {
         const results = parsedJson.results.results;
