@@ -95,6 +95,7 @@ function App() {
 
   useEffect(() => {
     var options = {
+        enableHighAccuracy: true,
         timeout: 5000,
         maximumWait: 10000,     // max wait time for desired accuracy
         maximumAge: 0,          // disable cache
@@ -103,8 +104,12 @@ function App() {
     };
     geolocator.locate(options, function (err: any, location: any) {
         if (err) return console.log(err);
-        if (location && location.address) {
+        if (location && location.address && location.address.city) {
           getWeather(location.address.city);
+        } else if (location && location.coords) {
+          getWeather(location.coords.latitude + ',' + location.coords.longitude);
+        } else {
+          setMenuOpen(true);
         }
     });
   }, []);
