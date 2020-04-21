@@ -186,7 +186,7 @@ function App() {
         </h1>
         <div className={`search-wrapper ${menuOpen ? 'active' : '' }`}>
           { menuOpen ? renderNewLocationForm() : 
-            <Icon name='search' onClick={() => { setMenuOpen(true) }} /> 
+            <Icon className="search-toggle-icon" name='search' onClick={() => { setMenuOpen(true) }} /> 
           }
         </div>
       </header>

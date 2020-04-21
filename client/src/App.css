@@ -53,11 +53,25 @@
   border-radius: 0;
 }
 
-.search-wrapper .icon {
+.search-wrapper form {
   position: relative;
-  top: 1px;
+}
+
+.search-wrapper .search-icon {
+  position: absolute;
+  right: 0;
+  top: 40%;
+  opacity: 0.5;
+}
+
+.search-wrapper .search-icon.hide {
+  display: none;
+}
+
+.search-wrapper .search-toggle-icon {
+  position: relative;
+  top: 3px;
   margin: 0;
-  font-size: 1.4rem;
 }
 
 .search-wrapper .search-close {
@@ -217,7 +231,6 @@
     height: 50px;
   } 
   .search-wrapper .icon {
-    top: 2px;
     font-size: 1.8rem;
   }
   .search-wrapper .search-close {

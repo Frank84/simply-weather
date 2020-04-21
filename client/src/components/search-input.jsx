@@ -1,7 +1,7 @@
 import _ from 'lodash'
 import cities from '../utilities/cities.json';
 import React, { Component } from 'react'
-import { Search } from 'semantic-ui-react'
+import { Search, Icon } from 'semantic-ui-react'
 
 const initialState = { isLoading: false, results: [], value: '' }
 
@@ -19,8 +19,6 @@ export default class SearchExampleStandard extends Component {
   }
 
   handleResultSelect = (e, { result }) => {
-    console.log('result');
-    console.log(result);
     this.setState({ value: result.title })
   }
 
@@ -30,7 +28,6 @@ export default class SearchExampleStandard extends Component {
 
     setTimeout(() => {
       if (value.length < 3) return this.setState({ isLoading: false  });
-      console.log(this.state.value);  
       if (this.state.value.length < 1) return this.setState(initialState)
 
       const re = new RegExp(_.escapeRegExp(this.state.value), 'i')
@@ -61,6 +58,7 @@ export default class SearchExampleStandard extends Component {
           value={value}
           {...this.props}
         />
+        <Icon className={`${isLoading ? 'hide' : '' } search-icon`} onClick={this.searchNewLocation} name='search' />
       </form>
     )
   }

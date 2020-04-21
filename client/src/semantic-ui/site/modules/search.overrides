@@ -6,6 +6,21 @@
   border: none;
   background: transparent;
   color: white;
+  padding-left: 0;
+}
+
+.ui.search .input > i.icon:before {
+  content: ''
+}
+
+.ui.search .input > i.icon:before {
+  content: '';
+}
+
+.ui.search.loading .input > i.icon:before,
+.ui.search.loading .input > i.icon:after {
+  left: inherit;
+  right: 0;
 }
 
 .ui.input {
