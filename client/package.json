@@ -16,11 +16,12 @@
     "typescript": "^3.8.3"
   },
   "scripts": {
-    "start": "craco start",
+    "start": "node ../app.js | craco start",
     "build": "craco build",
     "test": "craco test",
     "eject": "craco eject"
   },
+  "proxy": "http://localhost:5000",
   "eslintConfig": {
     "extends": "react-app"
   },
