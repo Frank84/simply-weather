@@ -2,6 +2,8 @@
 
 A simple weather application. 
 
+Live Demo: https://salty-savannah-29998.herokuapp.com/
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 API -> It uses WeatherStack API for the weather data, and Unsplash API to render an image based on the query.<br />
 Backend -> A simple Node Express server take care of serving the routes to get the weather data and background image.<br />
