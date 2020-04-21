@@ -1,0 +1,203 @@
+.app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: #ddd;
+  background-size: cover;
+  background-position-y: 50%;
+  text-align: center;
+  color: white;
+}
+
+.app-main {
+  position: relative;
+  width: auto;
+  max-width: 80%;
+  margin: 2rem;
+  padding: 4rem;
+  border-radius: 2rem;
+  background-color: rgba(0,0,0,0.5);
+  transition: width 0.3s ease-out;
+}
+
+.search-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  right: 4rem;
+  top: 4.3rem;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  background: rgba(0,0,0,0.5);
+  border-radius: 50%;
+  transition: all 0.3s ease-out;
+  z-index: 10;
+}
+
+.search-wrapper.active {
+  right: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.9);
+  border-radius: 0;
+}
+
+.search-wrapper .icon {
+  position: relative;
+  top: 1px;
+  margin: 0;
+  font-size: 1.4rem;
+}
+
+.search-wrapper .search-close {
+  position: fixed;
+  right: 2rem;
+  top: 2rem;
+  transition: all 3s ease-out, position 3s ease-out 1s;
+  opacity: 0;
+}
+
+.search-close.active {
+  opacity: 1;
+}
+
+.temperature {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin: auto;
+}
+
+.temperature-degree {
+  font-size: 7.2rem;
+  line-height: 7.2rem;
+  text-align: right;
+}
+
+.temperature-details {
+  display: flex;
+  flex-basis: 60%;
+  flex-wrap: wrap;
+}
+
+.temperature-unit {
+  flex-basis: 20%;
+  font-size: 2rem;
+  color: #999;
+  cursor: default;
+}
+
+.temperature-unit.active {
+  color: #FFF;
+}
+
+.temperature-or {
+  color: #FFF;
+}
+
+.temperature-unit.fahrenheit {
+  flex-basis: 70%;
+} 
+
+.temperature-feelslike {
+  flex-basis: 100%;
+  margin: 0.5rem 0;
+  padding-left: 0.8rem;
+  font-size: 1rem;
+  text-align: left;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  margin: 0 0 2rem 0;
+  font-size: 2rem;
+  letter-spacing: -2px;
+  color: rgba(255,255,255,1);
+  opacity: 0.75;
+}
+
+.logo-icon {
+  font-size: 2rem;
+}
+
+.load {
+  border-radius: 2rem;
+}
+
+@-webkit-keyframes rotating /* Safari and Chrome */ {
+  from {
+    -webkit-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@keyframes rotating {
+  from {
+    -ms-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  to {
+    -ms-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+.rotating {
+  -webkit-animation: rotating 10s linear infinite;
+  -moz-animation: rotating 10s linear infinite;
+  -ms-animation: rotating 10s linear infinite;
+  -o-animation: rotating 10s linear infinite;
+  animation: rotating 10s linear infinite;
+}
+
+@media (min-width: 500px) {
+  .temperature-details {
+    flex-basis: 40%;
+  }
+}
+@media (min-width: 600px) {
+  .temperature-details {
+    flex-basis: 30%;
+  }
+  .search-wrapper {
+    width: 50px;
+    height: 50px;
+  } 
+  .search-wrapper .icon {
+    top: 2px;
+    font-size: 1.8rem;
+  }
+  .search-wrapper .search-close {
+    top: 2rem;
+  }
+  .app-header .logo .icon {
+    font-size: 2.4rem;
+  }
+  .logo-icon {
+    font-size: 2.5rem;
+  }
+}
+
+@media (min-width: 800px) {
+  .temperature-details {
+    flex-basis: 20%;
+  }
+}

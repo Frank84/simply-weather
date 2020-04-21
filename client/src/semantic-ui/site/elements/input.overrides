@@ -1,0 +1,20 @@
+/*******************************
+         Site Overrides
+*******************************/
+
+.ui.transparent.input > input {
+  color: white!important;
+  border: none!important;
+  font-size: 2rem;
+}
+
+.ui.input {
+  border-bottom: solid 1px white;
+  padding: 1rem 0;
+}
+
+.ui.input .icon {
+  color: white;
+  position: relative;
+  top: 1rem;
+}
