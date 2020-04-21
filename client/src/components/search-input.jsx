@@ -47,6 +47,7 @@ export default class SearchExampleStandard extends Component {
           onSearchChange={_.debounce(this.handleSearchChange, 500, {
             leading: true,
           })}
+          autoFocus="true"
           placeholder="Search for a city"
           results={results}
           value={value}
