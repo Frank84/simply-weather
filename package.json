@@ -1,14 +1,15 @@
 {
-  "name": "good-relay",
+  "name": "simpleweather-api",
   "version": "1.0.0",
   "description": "a simple backend relay for hitting the WeatherStack API",
   "main": "index.js",
   "scripts": {
     "start": "node app.js",
+    "heroku-postbuild": "cd client && npm install --only=dev && npm install && npm run build",
     "dev": "nodemon app.js",
     "debug": "nodemon --inspect app.js"
   },
-  "author": "Jackson Bates",
+  "author": "Francis Bolduc",
   "license": "MIT",
   "dependencies": {
     "@babel/core": "^7.6.4",

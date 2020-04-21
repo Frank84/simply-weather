@@ -1,34 +1,15 @@
 require("dotenv").config();
 const express = require("express");
+const path = require('path');
+const app = express();
 const fetch = require("node-fetch");
 const rateLimit = require("express-rate-limit");
+const port = process.env.PORT || 3000;
 var cors = require("cors");
-const app = express();
-const port = 3000;
 
-// Rate limiting - limits to 1/sec
-
-// Enable if you're behind a reverse proxy (Heroku, Bluemix, AWS ELB, Nginx, etc)
-// see https://expressjs.com/en/guide/behind-proxies.html
-// app.set('trust proxy', 1);
-
-const limiter = rateLimit({
-  windowMs: 1000, // 1 second
-  max: 1, // limit each IP to 1 requests per windowMs
-});
-
-//  apply to all requests
-app.use(limiter);
-
-// Allow CORS from any origin
-// app.use(cors());
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  next();
-});
+app.use(express.static(path.join(__dirname, 'client/build')));
 
 // Routes
-
 // Images api route
 app.get("/images", async (req, res) => {
   try {
@@ -43,7 +24,6 @@ app.get("/images", async (req, res) => {
     // The API returns stuff we don't care about, so we may as well strip out
     // everything except the results:
     const results = JSON.parse(json)
-    // const results = JSON.parse(json).GoodreadsResponse.search.results;
 
     return res.json({
       success: true,
@@ -76,7 +56,6 @@ app.get("/weather/historical", async (req, res) => {
     // The API returns stuff we don't care about, so we may as well strip out
     // everything except the results:
     const results = JSON.parse(json)
-    // const results = JSON.parse(json).GoodreadsResponse.search.results;
 
     return res.json({
       success: true,
@@ -90,8 +69,8 @@ app.get("/weather/historical", async (req, res) => {
   }
 });
 
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname+'/client/build/index.html'));
+});
 
-// This spins up our sever and generates logs for us to use.
-// Any console.log statements you use in node for debugging will show up in your
-// terminal, not in the browser console!
-app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+app.listen(port, () => console.log(`Listening on port ${port}!`));
