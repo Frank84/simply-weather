@@ -6,6 +6,11 @@ const fetch = require("node-fetch");
 const port = process.env.PORT || 5000;
 var cors = require("cors");
 
+const API_WEATHER_KEY = '21c5515619d98661c24bc66048250c9c';
+const API_WEATHER_ENDPOINT = 'http://api.weatherstack.com';
+const API_IMAGES_ENDPOINT = 'https://api.unsplash.com';
+const API_IMAGES_KEY = 'T3kfr7XcC4-yB8siCj080DRwizjaZTYhE7SKyhZf1zM';
+
 app.use(cors());
 
 app.use(express.static(path.join(__dirname, 'client/build')));
@@ -16,7 +21,7 @@ app.get("/images", async (req, res) => {
   try {
     // It uses node-fetch to call the api, and reads the key from .env
     const response = await fetch(
-      `${process.env.API_IMAGES_ENDPOINT}/search/photos?page=1&query=${req.query.q}&client_id=${process.env.API_IMAGES_KEY}`,
+      `${API_IMAGES_ENDPOINT}/search/photos?page=1&query=${req.query.q}&client_id=${API_IMAGES_KEY}`,
     );
 
     // waiting for response
@@ -48,7 +53,7 @@ app.get("/weather/historical", async (req, res) => {
 
     // It uses node-fetch to call the api, and reads the key from .env
     const response = await fetch(
-      `${process.env.API_WEATHER_ENDPOINT}/historical?access_key=${process.env.API_WEATHER_KEY}&${searchString}`,
+      `${API_WEATHER_ENDPOINT}/historical?access_key=${API_WEATHER_KEY}&${searchString}`,
       );
 
     // waiting for response

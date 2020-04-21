@@ -31,21 +31,29 @@ function App() {
     // - range: string of the past 30 days.
     // - query: name of the city requested
     // - unit: m (metrics) f (fahrenheit)
-    try {
-      setIsError(false);
-      setLoading(true);
-      const range = getStringDays(30);
-      const api_query = await fetch(`${process.env.REACT_APP_API_ENDPOINT}/weather/historical?t=${range}&q=${query}&unit=${degreeUnit}`);
-      const parse_json = await api_query.json();
-      const results = parse_json.results;
-      setCurrentWeather({ current: results.current, location: results.location, historical: results.historical });
-      setCurrentLocation(results.location.name);
-    }
-    catch(error) {
-      setIsError(true);
-      throw error;
-    }
-    setLoading(false);
+    setIsError(false);
+    setLoading(true);
+    const range = getStringDays(30);
+    await fetch(`${process.env.REACT_APP_API_ENDPOINT}/weather/historical?t=${range}&q=${query}&unit=${degreeUnit}`)
+      .then((response) => {
+        if (response.status >= 400 && response.status < 600) {
+          setIsError(true);
+          throw new Error("Bad response from server");
+        }
+        return response;
+      }).then((returnedResponse) => {
+        returnedResponse.json()
+          .then((parsedJson) => {
+            const results = parsedJson.results;
+            setCurrentWeather({ current: results.current, location: results.location, historical: results.historical });
+            setCurrentLocation(results.location.name);
+          });
+      }).catch((error) => {
+        setIsError(true);
+        console.error(error);
+      }).finally(() => {
+        setLoading(false);
+      });
   }
 
   async function getBackgroundImage(query: string) {
@@ -145,7 +153,7 @@ function App() {
         { !isError ? currentWeather.location.name ?
           <WeatherDetails getWeather={getWeather} currentWeather={currentWeather} degreeUnit={{degreeUnit, setDegreeUnit}} /> :
           <div className="load ui active dimmer"><div className="ui loader"></div></div> :
-          <div>Oops, something went wrong. <span onClick={() => { getWeather(currentLocation) }}>Please try again.</span></div>
+          <div>Oops, something went wrong. <span style={{ textDecoration: 'underline', cursor: 'default' }} onClick={() => { getWeather(currentLocation) }}>Please try again.</span></div>
         }
       </main>
     </div>
