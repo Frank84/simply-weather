@@ -22,7 +22,7 @@
   width: auto;
   max-width: 80%;
   margin: 2rem;
-  padding: 4rem;
+  padding: 3rem;
   border-radius: 2rem;
   background-color: rgba(0,0,0,0.5);
   transition: width 0.3s ease-out;
@@ -82,14 +82,14 @@
 }
 
 .temperature-degree {
-  font-size: 7.2rem;
-  line-height: 7.2rem;
+  font-size: 5.5rem;
+  line-height: 5.5rem;
   text-align: right;
 }
 
 .temperature-details {
   display: flex;
-  flex-basis: 60%;
+  flex-basis: 47%;
   flex-wrap: wrap;
 }
 
@@ -191,12 +191,24 @@
 /* MEDIA QUERIES */
 /* */
 
+@media (min-width: 400px) {
+  .temperature-details {
+    flex-basis: 45%;
+  }
+}
 @media (min-width: 500px) {
   .temperature-details {
     flex-basis: 40%;
   }
 }
 @media (min-width: 600px) {
+  .app-main {
+    padding: 4rem;
+  }
+  .temperature-degree {
+    font-size: 7.2rem;
+    line-height: 7.2rem;
+  }
   .temperature-details {
     flex-basis: 30%;
   }
