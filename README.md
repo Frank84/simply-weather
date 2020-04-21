@@ -1,17 +1,79 @@
-# Technical assignment front-end engineer
-Make an application that allows the user to view the observed (in the past 30 days) or forecasted (in the future) daily weather conditions for a given location using the [Dark Sky API](https://darksky.net/dev/docs).
+# Simply Weather
 
-You are free to use the tools and frameworks you prefer, however we strongly suggest you keep the hard skills of the job offer in mind.
+A simple weather application. 
 
-**Minimal requirements**
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+API -> It uses WeatherStack API for the weather data, and Unsplash API to render an image based on the query.
+Backend -> A simple Node Express server take care of serving the routes to get the weather data and background image.
+CSS -> Semantic UI
 
-The three pillars of front-end development are HTML, CSS and JavaScript. We would like to see you know how to use them for the right job.
-* Use ReactJS
-* Pay attention to semantics: any HTML might work, but choosing the right tags show you care
-* Show us you know how to create a modern user interface using CSS or your favourite CSS preprocessor
-* Communicate to the Dark Sky API through a PHP or JavaScript back-end
+Please note that since I am using the free version of the weather API, I only have access to 
+the historical data. For that reason, don't be surprise to see that the forecast is actually backward
+and displayed historical days :) 
 
-**Timing**
+## Available Scripts
 
-You have 3 weeks to accomplish the assignment.  You decide yourself how much time and effort you invest in it, but one of our colleagues tends to say: "Make sure it is good" ;-). 
-Please send us (jobs@madewithlove.be) an email when you are ready with the assignment. Please mention your name, Github username and a link to what we need to review.
+In the project directory, you can run:
+
+### `yarn start`
+
+Runs the app in the development mode.<br />
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+
+The page will reload if you make edits.<br />
+You will also see any lint errors in the console.
+
+### `yarn test`
+
+Launches the test runner in the interactive watch mode.<br />
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+
+### `yarn build`
+
+Builds the app for production to the `build` folder.<br />
+It correctly bundles React in production mode and optimizes the build for the best performance.
+
+The build is minified and the filenames include the hashes.<br />
+Your app is ready to be deployed!
+
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+
+### `yarn eject`
+
+**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+
+If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+
+Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+
+You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+
+## Learn More
+
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+
+To learn React, check out the [React documentation](https://reactjs.org/).
+
+### Code Splitting
+
+This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+
+### Analyzing the Bundle Size
+
+This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+
+### Making a Progressive Web App
+
+This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+
+### Advanced Configuration
+
+This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+
+### Deployment
+
+This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+
+### `yarn build` fails to minify
+
+This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
