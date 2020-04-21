@@ -60,7 +60,7 @@
 .search-wrapper .search-icon {
   position: absolute;
   right: 0;
-  top: 40%;
+  top: 30%;
   opacity: 0.5;
 }
 
@@ -70,8 +70,13 @@
 
 .search-wrapper .search-toggle-icon {
   position: relative;
-  top: 3px;
+  top: 0px;
   margin: 0;
+  font-size: 1.3rem;
+}
+
+.search-wrapper .icon {
+  font-size: 1.3rem;
 }
 
 .search-wrapper .search-close {
@@ -199,6 +204,8 @@
   -ms-animation: rotating 10s linear infinite;
   -o-animation: rotating 10s linear infinite;
   animation: rotating 10s linear infinite;
+  transform-origin: 50% 50%;
+  margin: 0;
 }
 
 /* */
@@ -232,6 +239,12 @@
   } 
   .search-wrapper .icon {
     font-size: 1.8rem;
+  }
+  .search-wrapper .search-toggle-icon {
+    top: 3px;
+  }
+  .search-wrapper .search-icon {
+    top: 40%;
   }
   .search-wrapper .search-close {
     top: 2rem;
