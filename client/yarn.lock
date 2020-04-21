@@ -2849,6 +2849,11 @@ cipher-base@^1.0.0, cipher-base@^1.0.1, cipher-base@^1.0.3:
     inherits "^2.0.1"
     safe-buffer "^5.0.1"
 
+cities.json@^1.1.5:
+  version "1.1.5"
+  resolved "https://registry.yarnpkg.com/cities.json/-/cities.json-1.1.5.tgz#bd82fd19f67e8f7a9735b0e9c1c45d050c2bfe73"
+  integrity sha512-BKge3FmYfYOtN3tBaLfN9QvB7M5dDyjen3aFOn6XwgNASvLDhWTJazAtCvbpDWlpM6YWZXh4TUTsgxOn/n6MbA==
+
 class-utils@^0.3.5:
   version "0.3.6"
   resolved "https://registry.yarnpkg.com/class-utils/-/class-utils-0.3.6.tgz#f93369ae8b9a7ce02fd41faad0ca83033190c463"
@@ -4429,6 +4434,11 @@ extsprintf@^1.2.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/extsprintf/-/extsprintf-1.4.0.tgz#e2689f8f356fad62cca65a3a91c5df5f9551692f"
   integrity sha1-4mifjzVvrWLMplo6kcXfX5VRaS8=
+
+faker@^4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/faker/-/faker-4.1.0.tgz#1e45bbbecc6774b3c195fad2835109c6d748cc3f"
+  integrity sha1-HkW7vsxndLPBlfrSg1EJxtdIzD8=
 
 fast-deep-equal@^3.1.1:
   version "3.1.1"

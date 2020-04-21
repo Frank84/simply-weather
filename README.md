@@ -5,7 +5,7 @@ A simple weather application.
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 API -> It uses WeatherStack API for the weather data, and Unsplash API to render an image based on the query.<br />
 Backend -> A simple Node Express server take care of serving the routes to get the weather data and background image.<br />
-CSS -> Semantic UI
+CSS -> Semantic React UI
 
 Please note that since I am using the free version of the weather API, I only have access to 
 the historical data. For that reason, don't be surprise to see that the forecast is actually backward

@@ -22,6 +22,7 @@ export default function ForecastDay(props) {
     // We only have historical data without any visual weather icons.
     // For the purpose of this app, we are displaying a random icon for each day.
     setWeatherIcon(weatherIcons[getRandomInt(weatherIcons.length)]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

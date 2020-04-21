@@ -1,3 +1,13 @@
 /*******************************
          Site Overrides
 *******************************/
+
+.ui.icon.input > input {
+  border: none;
+  background: transparent;
+  color: white;
+}
+
+.ui.input {
+  padding: 0;
+}

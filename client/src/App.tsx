@@ -6,6 +6,7 @@ import { Icon } from 'semantic-ui-react'
 import './App.css';
 
 import WeatherDetails from './components/weather-details';
+import SearchInput from './components/search-input';
 import defaultBackgroundImage from './images/background.png';
 import { getRandomInt } from './utilities/utils';
 
@@ -26,14 +27,12 @@ function App() {
   const [degreeUnit, setDegreeUnit] = useState('c');
   // use to show/hide the weather details component
   const [isError, setIsError] = useState(false);
-  // display a spinner in the input when searching for location
-  const [loading, setLoading] = useState(false);
+  // use to display a message when the query has no result.
+  const [isNoResult, setIsNoResult] = useState(false);
   // path for the background image is taken from Unsplash API with the location query 
   const [locationBackgroundImage, setLocationBackgroundImage] = useState('');
   // use to show/hide the overlay menu to submit a new location
   const [menuOpen, setMenuOpen] = useState(false);
-  // the current value of the input to submit a new location
-  const [submitValue, setSubmitValue] = useState('');
 
   //
   // API functions
@@ -48,7 +47,7 @@ function App() {
     // - query: name of the city requested
     // - unit: m (metrics) f (fahrenheit)
     setIsError(false);
-    setLoading(true);
+    setIsNoResult(false);
     const range = getStringDays(30);
     await fetch(`/weather/historical?t=${range}&q=${query}&unit=${degreeUnit}`)
       .then((response) => {
@@ -66,22 +65,21 @@ function App() {
             // For these two code, we throw an error regarding the query.
             const code = parsedJson.results.error.code;
             if (code === 615 || code === 400) {
-              setIsError(true);
-              return console.error('Something wrong with the query requested');
+              console.error('Something wrong with the query requested');
+              setIsNoResult(true)
             }
+          } else {
+            const results = parsedJson.results;
+            setCurrentWeather({ 
+              current: results.current, 
+              location: results.location, 
+              historical: results.historical });
+            setCurrentLocation(results.location.name);
           }
-          const results = parsedJson.results;
-          setCurrentWeather({ 
-            current: results.current, 
-            location: results.location, 
-            historical: results.historical });
-          setCurrentLocation(results.location.name);
         });
       }).catch((error) => {
         setIsError(true);
         console.error(error);
-      }).finally(() => {
-        setLoading(false);
       });
   }
 
@@ -115,7 +113,7 @@ function App() {
         getBackgroundImage(currentWeather.location.name)
       }
     }
-  }, [currentWeather]);
+  }, [currentWeather, currentLocation]);
 
   useEffect(() => {
     // first check if location already exists in cache
@@ -143,11 +141,20 @@ function App() {
           }
       });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   //
   // Utilities functions
   //
+
+  function onValueChange() {
+    // if set, reset the error message 
+    // when user type something in the search input 
+    if (isNoResult) {
+      setIsNoResult(false);
+    }
+  }
 
   function getStringDays(numberOfdays: Number): string {
     // This return a string in the format expected by WeatherStack API.
@@ -163,21 +170,11 @@ function App() {
   function renderNewLocationForm() {
     return (
       <div>
-        <form onSubmit={searchNewLocation}>
-          <div className={`ui action transparent input ${loading ? 'loading' : ''}`}>
-            <input autoFocus type="text" onChange={(e) => setSubmitValue(e.target.value)} placeholder="Search a city" />
-            <i className={`search icon`} onClick={searchNewLocation}></i>
-          </div>
-        </form>
+        <SearchInput getweather={getWeather} valuechange={onValueChange} setmenuopen={setMenuOpen} />
+        <p className='no-result'>{ isNoResult ? `Can't find result, please try again.` : ''}</p>
         <Icon className={`search-close ${menuOpen ? 'active' : ''}`} onClick={() => { setMenuOpen(false) }} name='close' />
       </div>
     )
-  }
-
-  async function searchNewLocation(e: React.SyntheticEvent<EventTarget>) {
-    e.preventDefault();
-    await getWeather(submitValue);
-    setMenuOpen(false);
   }
 
   return (

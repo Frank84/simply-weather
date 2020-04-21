@@ -18,6 +18,7 @@ export default function WeatherDetails(props) {
       getWeather(currentWeather.location.name);
       setWeatherDisplayMode('forecast');
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [degreeUnit]);
 
   function displayLocationName(): string {
