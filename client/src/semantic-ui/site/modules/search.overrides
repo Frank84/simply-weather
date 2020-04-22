@@ -6,7 +6,7 @@
   border: none;
   background: transparent;
   color: white;
-  padding-left: 0;
+  padding-left: 0.2rem;
 }
 
 .ui.search .input > i.icon:before {

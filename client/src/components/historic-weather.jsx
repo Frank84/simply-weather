@@ -6,7 +6,6 @@ export default function HistoricWeather(props) {
   const historical = props.historical;
   
   useEffect(() => {
-    console.log('calling');
     // Generating the canvas graph using chartjs
     let ctx = document.getElementById('myChart').getContext('2d');
     new Chart(ctx, {
