@@ -20,6 +20,7 @@
   z-index: 1;
   position: relative;
   width: auto;
+  min-height: 410px;
   max-width: 80%;
   margin: 2rem;
   padding: 3rem;
@@ -258,6 +259,10 @@
 }
 
 @media (min-width: 800px) {
+  .app-main {
+    min-width: 640px;
+    min-height: 410px;
+  }
   .temperature-details {
     flex-basis: 20%;
   }

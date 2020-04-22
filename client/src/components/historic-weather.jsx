@@ -78,6 +78,6 @@ const styles = {
   chart: {
     width: '100%',
     maxWidth: '400px',
-    marginBottom: '1rem',
+    margin: '1rem auto',
   }
 }

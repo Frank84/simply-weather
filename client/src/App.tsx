@@ -190,13 +190,16 @@ function App() {
           }
         </div>
       </header>
-      <main className="app-main">
-        { !isError ? currentWeather.location.name ?
-          <WeatherDetails getWeather={getWeather} currentWeather={currentWeather} degreeUnit={{degreeUnit, setDegreeUnit}} /> :
-          <div className="load ui active dimmer"><div className="ui loader"></div></div> :
-          <div>Oops, something went wrong. <span style={{ textDecoration: 'underline', cursor: 'default' }} onClick={() => { getWeather(currentLocation) }}>Please try again.</span></div>
-        }
-      </main>
+      { !currentWeather.location.name ?
+        <div className="ui active centered inline loader"></div> : ''
+      }
+      { currentWeather.location.name ? 
+        <main className="app-main">
+          { isError ? <div>Oops, something went wrong. <span style={{ textDecoration: 'underline', cursor: 'default' }} onClick={() => { getWeather(currentLocation) }}>Please try again.</span></div> :
+            <WeatherDetails getWeather={getWeather} currentWeather={currentWeather} degreeUnit={{degreeUnit, setDegreeUnit}} />
+          }
+        </main> 
+      : '' }
     </div>
   );
 }
