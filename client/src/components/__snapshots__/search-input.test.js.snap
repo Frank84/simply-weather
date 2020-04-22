@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders properly 1`] = `
+<form
+  onSubmit={[Function]}
+>
+  <Search
+    autoFocus={true}
+    icon="search"
+    input="text"
+    loading={false}
+    minCharacters={1}
+    noResultsMessage="No results found."
+    onResultSelect={[Function]}
+    onSearchChange={[Function]}
+    placeholder="Search for a city"
+    resultRenderer={[Function]}
+    results={Array []}
+    showNoResults={true}
+    value=""
+  />
+  <Icon
+    as="i"
+    className=" search-icon"
+    name="search"
+    onClick={[Function]}
+  />
+</form>
+`;

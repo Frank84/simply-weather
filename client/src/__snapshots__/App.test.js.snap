@@ -1,0 +1,40 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders properly 1`] = `
+<div
+  className="app"
+  style={
+    Object {
+      "backgroundImage": "url()",
+    }
+  }
+>
+  <header
+    className="app-header"
+  >
+    <h1
+      className="logo"
+    >
+      <Icon
+        as="i"
+        className="logo-icon rotating"
+        name="sun"
+      />
+      Simply Weather
+    </h1>
+    <div
+      className="search-wrapper "
+    >
+      <Icon
+        as="i"
+        className="search-toggle-icon"
+        name="search"
+        onClick={[Function]}
+      />
+    </div>
+  </header>
+  <div
+    className="ui active centered inline loader"
+  />
+</div>
+`;

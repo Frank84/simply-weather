@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders properly 1`] = `
+<Fragment>
+  <canvas
+    height="100"
+    id="myChart"
+    style={
+      Object {
+        "margin": "1rem auto",
+        "maxWidth": "400px",
+        "width": "100%",
+      }
+    }
+  />
+</Fragment>
+`;

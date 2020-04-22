@@ -1,0 +1,55 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders properly 1`] = `
+<section
+  style={
+    Object {
+      "border": "solid 2px rgba(255,255,255,0.7)",
+      "borderRadius": "0.6rem",
+      "fontSize": "12px",
+      "fontWeight": "bold",
+      "margin": "0 0.5rem",
+      "padding": "0.5rem",
+    }
+  }
+>
+  <header>
+    Wed
+  </header>
+  <img
+    alt="Weather Icon"
+    style={
+      Object {
+        "margin": "auto",
+      }
+    }
+    width="40"
+  />
+  <p
+    style={
+      Object {
+        "textAlign": "center",
+      }
+    }
+  >
+    <span
+      style={
+        Object {
+          "paddingRight": "0.5rem",
+        }
+      }
+    >
+      °
+    </span>
+    <span
+      style={
+        Object {
+          "color": "#999",
+        }
+      }
+    >
+      °
+    </span>
+  </p>
+</section>
+`;
