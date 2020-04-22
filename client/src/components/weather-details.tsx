@@ -36,9 +36,11 @@ export default function WeatherDetails(props) {
       <div className="temperature">
         <span className="temperature-degree">{ currentWeather && currentWeather.current ? currentWeather.current.temperature : '' }</span>
         <div className="temperature-details">
-          <span onClick={() => { setDegreeUnit('c') }} className={`${degreeUnit === 'c' ? 'active' : '' } temperature-unit temperature-celcius`}>°C</span>
-          <span className="temperature-unit temperature-or">|</span>
-          <span onClick={() => { setDegreeUnit('f') }} className={`${degreeUnit === 'f' ? 'active' : '' } temperature-unit temperature-fahrenheit`}>°F</span>
+          <div>
+            <span onClick={() => { setDegreeUnit('c') }} className={`${degreeUnit === 'c' ? 'active' : '' } temperature-unit temperature-celcius`}>°C</span>
+            <span className="temperature-unit temperature-or">|</span>
+            <span onClick={() => { setDegreeUnit('f') }} className={`${degreeUnit === 'f' ? 'active' : '' } temperature-unit temperature-fahrenheit`}>°F</span>
+          </div>
           <span className="temperature-feelslike">{ currentWeather && currentWeather.current ? 'Feels like ' + currentWeather.current.feelslike + '°' : '' }</span>
         </div>
       </div>

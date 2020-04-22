@@ -9,7 +9,7 @@ export default function Forecast(props) {
   const historical = props.historical;
   
   return (
-    <div style={styles.container}>
+    <div className="forecast">
       {historical ? Object.keys(historical).map((day, i) => {
         if (i < props.nmbOfDays) {
           return (<ForecastDay key={i} max={historical[day].maxtemp} low={historical[day].mintemp} date={historical[day].date} />)
@@ -17,12 +17,4 @@ export default function Forecast(props) {
       }): ''}
     </div>
   )
-}
-
-const styles = {
-  container: {
-    display: 'flex',
-    margin: '1rem 0',
-    overflow: 'auto',
-  }
 }
