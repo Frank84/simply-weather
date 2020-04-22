@@ -7,7 +7,7 @@ const initialState = { isLoading: false, results: [], value: '' }
 
 const resultRenderer = ({ title, country }) => <p>{`${title} - ${country}`}</p>
 
-export default class SearchExampleStandard extends Component {
+export default class SearchInput extends Component {
   state = initialState
 
   searchNewLocation = async (e) => {

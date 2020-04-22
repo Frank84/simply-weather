@@ -1,7 +1,7 @@
-import App from './App';
 import React from 'react';
+import HistoricWeather from './historic-weather';
 import { shallow } from 'enzyme';
 
 it('renders without crashing', () => {
-  shallow(<App />);
+  shallow(<HistoricWeather />);
 });
