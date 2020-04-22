@@ -21,10 +21,10 @@ export default function WeatherDetails(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [degreeUnit]);
 
-  function displayLocationName(): string {
-    if (currentWeather && currentWeather.location) {
-      const region = currentWeather.location.region ? ', ' + currentWeather.location.region : '';
-      return currentWeather.location.name + region;
+  function displayLocationName(city: string, region: string): string {
+    if (city) {
+      region = region ? ', ' + region : '';
+      return city + region;
     } else {
       return '';
     }
@@ -32,7 +32,7 @@ export default function WeatherDetails(props) {
 
   return (
     <>
-      <h1 style={{ marginBottom: '0' }}>{ displayLocationName() }</h1>
+      <h2 className="location-name">{ displayLocationName(currentWeather.location.name, currentWeather.location.region) }</h2>
       <div className="temperature">
         <span className="temperature-degree">{ currentWeather && currentWeather.current ? currentWeather.current.temperature : '' }</span>
         <div className="temperature-details">

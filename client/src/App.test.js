@@ -1,7 +1,9 @@
 import App from './App';
-import React from 'react';
 import { shallow } from 'enzyme';
+import toJson from 'enzyme-to-json';
+import React from 'react';
 
-it('renders without crashing', () => {
-  shallow(<App />);
+it('renders properly', () => {
+  const wrapper = shallow(<App />);
+  expect(toJson(wrapper)).toMatchSnapshot();
 });

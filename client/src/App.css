@@ -92,6 +92,11 @@
   opacity: 1;
 }
 
+.location-name {
+  width: 75%;
+  margin: 1rem auto;
+}
+
 .temperature {
   display: flex;
   flex-wrap: wrap;

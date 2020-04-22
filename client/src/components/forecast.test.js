@@ -1,7 +1,9 @@
-import React from 'react';
-import Forecast from './forecast';
 import { shallow } from 'enzyme';
+import toJson from 'enzyme-to-json';
+import Forecast from './forecast';
+import React from 'react';
 
-it('renders without crashing', () => {
-  shallow(<Forecast />);
+it('renders properly', () => {
+  const wrapper = shallow(<Forecast />);
+  expect(toJson(wrapper)).toMatchSnapshot();
 });
