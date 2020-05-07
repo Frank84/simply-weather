@@ -3,6 +3,7 @@
 A simple weather application. 
 
 Live Demo: https://salty-savannah-29998.herokuapp.com/
+(Please note that the app is currently using mock data. For this reason it is currently not possible to change weather for a different city).
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).<br />
 API -> It uses WeatherStack API for the weather data, and Unsplash API to render an image based on the query.<br />
