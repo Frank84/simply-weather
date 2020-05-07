@@ -4,48 +4,39 @@ import React, { useEffect, useState } from 'react';
 import { Icon } from 'semantic-ui-react'
 
 import './App.css';
-
-import WeatherDetails from './components/weather-details';
-import SearchInput from './components/search-input';
 import defaultBackgroundImage from './images/background.png';
+import SearchInput from './components/search-input';
+import WeatherDetails from './components/weather-details';
 import { getRandomInt } from './utilities/utils';
 
-function App() {
-  //
-  // Constants
-  //
+import WeatherAPIMocks from './mocks/mocks'
+const MOCK_APP = true;
 
-  // Contains all the weather information displayed in the app
+function App() {
   const [currentWeather, setCurrentWeather] = useState({
     current: {},
     historical: {},
     location: { name: '' },
   });
-  // Keep a string of the current location name
   const [currentLocation, setCurrentLocation] = useState('');
-  // use when calling the api to pass the selected degree format
   const [degreeUnit, setDegreeUnit] = useState('c');
-  // use to show/hide the weather details component
   const [isError, setIsError] = useState(false);
-  // use to display a message when the query has no result.
   const [isNoResult, setIsNoResult] = useState(false);
-  // path for the background image is taken from Unsplash API with the location query 
   const [locationBackgroundImage, setLocationBackgroundImage] = useState('');
-  // use to show/hide the overlay menu to submit a new location
   const [menuOpen, setMenuOpen] = useState(false);
 
-  //
-  // API functions
-  //
-
   async function getWeather(query: string) {
-    // Getting weather forecast and historical data using WeatherStack API.
-    // Please note that we are using the free version of the API. 
-    // For this reason, historical data will be use for the forecast.
-    // Parameters passed: 
-    // - range: string of the past 30 days.
-    // - query: name of the city requested
-    // - unit: m (metrics) f (fahrenheit)
+
+    // No historical data available with current free weather api
+    // So for now we are returning mock data.
+    if (MOCK_APP) {
+      return setCurrentWeather({
+        current: WeatherAPIMocks.results.current,
+        location: WeatherAPIMocks.results.location,
+        historical: WeatherAPIMocks.results.historical
+      });
+    }
+
     setIsError(false);
     setIsNoResult(false);
     const range = getStringDays(30);
@@ -58,25 +49,26 @@ function App() {
         return response;
       }).then((returnedResponse) => {
         returnedResponse.json()
-        .then((parsedJson) => {
-          // the api only return a success property if when it fails.
-          if (parsedJson.results.success || parsedJson.results.success === false) {
-            // Both errors are returned when the API when the query fails.
-            // For these two code, we throw an error regarding the query.
-            const code = parsedJson.results.error.code;
-            if (code === 615 || code === 400) {
-              console.error('Something wrong with the query requested');
-              setIsNoResult(true)
+          .then((parsedJson) => {
+            // the api only return a success property if when it fails.
+            if (parsedJson.results.success || parsedJson.results.success === false) {
+              // Both errors are returned when the API when the query fails.
+              // For these two code, we throw an error regarding the query.
+              const code = parsedJson.results.error.code;
+              if (code === 615 || code === 400) {
+                console.error('Something wrong with the query requested');
+                setIsNoResult(true)
+              }
+            } else {
+              const results = parsedJson.results;
+              setCurrentWeather({
+                current: results.current,
+                location: results.location,
+                historical: results.historical
+              });
+              setCurrentLocation(results.location.name);
             }
-          } else {
-            const results = parsedJson.results;
-            setCurrentWeather({ 
-              current: results.current, 
-              location: results.location, 
-              historical: results.historical });
-            setCurrentLocation(results.location.name);
-          }
-        });
+          });
       }).catch((error) => {
         setIsError(true);
         console.error(error);
@@ -84,8 +76,6 @@ function App() {
   }
 
   async function getBackgroundImage(query: string) {
-    // Try to get a background image based on the city selected using Unsplash API.
-    // Use Unsplash API. If no result found, or error, use default background image. 
     try {
       const apiQuery = await fetch(`/images?q=${query}`);
       const parsedJson = await apiQuery.json();
@@ -102,13 +92,8 @@ function App() {
     }
   }
 
-  //
-  // UseEffect functions
-  //
-
   useEffect(() => {
     if (currentWeather && currentWeather.location) {
-      // Make sure the location is a different one before getting new picture.
       if (currentWeather.location.name !== currentLocation) {
         getBackgroundImage(currentWeather.location.name)
       }
@@ -116,41 +101,32 @@ function App() {
   }, [currentWeather, currentLocation]);
 
   useEffect(() => {
-    // first check if location already exists in cache
     let savedLocation = localStorage.getItem('location');
     if (savedLocation) {
       getWeather(savedLocation);
     } else {
-      // if cache does not exists, try to get location using geolocator
       var options = {
-          timeout: 5000,
-          maximumWait: 1000,     // max wait time for desired accuracy
-          desiredAccuracy: 5000,    // meters
-          fallbackToIP: true,     // fallback to IP if Geolocation fails or rejected
+        timeout: 5000,
+        maximumWait: 1000,
+        desiredAccuracy: 5000,
+        fallbackToIP: true,
       };
       geolocator.locate(options, function (err: any, location: any) {
-          if (err) return console.log(err);
-          if (!location) {
-            setMenuOpen(true);
-          } else {
-            const query = location.address && location.address.city ? 
-                  location.address.city : location.coords.latitude + ',' + location.coords.longitude;
-            // setting location to cache
-            localStorage.setItem('location', query);  
-            getWeather(query);
-          }
+        if (err) return console.log(err);
+        if (!location) {
+          setMenuOpen(true);
+        } else {
+          const query = location.address && location.address.city ?
+            location.address.city : location.coords.latitude + ',' + location.coords.longitude;
+          localStorage.setItem('location', query);
+          getWeather(query);
+        }
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  //
-  // Utilities functions
-  //
-
   function onValueChange() {
-    // if set, reset the error message 
-    // when user type something in the search input 
     if (isNoResult) {
       setIsNoResult(false);
     }
@@ -163,7 +139,7 @@ function App() {
     for (let i = 0; i < numberOfdays; i++) {
       let date = moment().subtract(i, 'days').format('YYYY-MM-DD') + ';';
       range = range + date;
-    } 
+    }
     return range.substring(0, range.length - 1);
   }
 
@@ -171,35 +147,35 @@ function App() {
     return (
       <div>
         <SearchInput getweather={getWeather} valuechange={onValueChange} setmenuopen={setMenuOpen} />
-        <p className='no-result'>{ isNoResult ? `Can't find result, please try again.` : ''}</p>
+        <p className='no-result'>{isNoResult ? `Can't find result, please try again.` : ''}</p>
         <Icon className={`search-close ${menuOpen ? 'active' : ''}`} onClick={() => { setMenuOpen(false) }} name='close' />
       </div>
     )
   }
 
   return (
-    <div className="app" style={{backgroundImage: `url(${locationBackgroundImage})`}}>
+    <div className="app" style={{ backgroundImage: `url(${locationBackgroundImage})` }}>
       <header className="app-header">
         <h1 className="logo">
-          <Icon className='logo-icon rotating' name='sun' /> 
+          <Icon className='logo-icon rotating' name='sun' />
           Simply Weather
         </h1>
-        <div className={`search-wrapper ${menuOpen ? 'active' : '' }`}>
-          { menuOpen ? renderNewLocationForm() : 
-            <Icon className="search-toggle-icon" name='search' onClick={() => { setMenuOpen(true) }} /> 
+        <div className={`search-wrapper ${menuOpen ? 'active' : ''}`}>
+          {menuOpen ? renderNewLocationForm() :
+            <Icon className="search-toggle-icon" name='search' onClick={() => { setMenuOpen(true) }} />
           }
         </div>
       </header>
-      { !currentWeather.location.name ?
+      {!currentWeather.location.name ?
         <div className="ui active centered inline loader"></div> : ''
       }
-      { currentWeather.location.name ? 
+      {currentWeather.location.name ?
         <main className="app-main">
-          { isError ? <div>Oops, something went wrong. <span style={{ textDecoration: 'underline', cursor: 'default' }} onClick={() => { getWeather(currentLocation) }}>Please try again.</span></div> :
-            <WeatherDetails getWeather={getWeather} currentWeather={currentWeather} degreeUnit={{degreeUnit, setDegreeUnit}} />
+          {isError ? <div>Oops, something went wrong. <span style={{ textDecoration: 'underline', cursor: 'default' }} onClick={() => { getWeather(currentLocation) }}>Please try again.</span></div> :
+            <WeatherDetails getWeather={getWeather} currentWeather={currentWeather} degreeUnit={{ degreeUnit, setDegreeUnit }} />
           }
-        </main> 
-      : '' }
+        </main>
+        : ''}
     </div>
   );
 }

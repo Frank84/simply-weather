@@ -4,16 +4,13 @@ import Forecast from './forecast';
 import HistoricWeather from './historic-weather';
 
 export default function WeatherDetails(props) {
-  
-  // Props constants coming from App
+
   const currentWeather = props.currentWeather;
-  const {degreeUnit, setDegreeUnit} = props.degreeUnit;
+  const { degreeUnit, setDegreeUnit } = props.degreeUnit;
   const getWeather = props.getWeather;
   const [weatherDisplayMode, setWeatherDisplayMode] = useState('forecast');
 
   useEffect(() => {
-    // Make another call to the weather api when the degree unit changed
-    // then switch back the mode to forecast.
     if (currentWeather && currentWeather.location) {
       getWeather(currentWeather.location.name);
       setWeatherDisplayMode('forecast');
@@ -32,33 +29,33 @@ export default function WeatherDetails(props) {
 
   return (
     <>
-      <h2 className="location-name">{ displayLocationName(currentWeather.location.name, currentWeather.location.region) }</h2>
+      <h2 className="location-name">{displayLocationName(currentWeather.location.name, currentWeather.location.region)}</h2>
       <div className="temperature">
-        <span className="temperature-degree">{ currentWeather && currentWeather.current ? currentWeather.current.temperature : '' }</span>
+        <span className="temperature-degree">{currentWeather && currentWeather.current ? currentWeather.current.temperature : ''}</span>
         <div className="temperature-details">
           <div>
-            <span onClick={() => { setDegreeUnit('c') }} className={`${degreeUnit === 'c' ? 'active' : '' } temperature-unit temperature-celcius`}>°C</span>
+            <span onClick={() => { setDegreeUnit('c') }} className={`${degreeUnit === 'c' ? 'active' : ''} temperature-unit temperature-celcius`}>°C</span>
             <span className="temperature-unit temperature-or">|</span>
-            <span onClick={() => { setDegreeUnit('f') }} className={`${degreeUnit === 'f' ? 'active' : '' } temperature-unit temperature-fahrenheit`}>°F</span>
+            <span onClick={() => { setDegreeUnit('f') }} className={`${degreeUnit === 'f' ? 'active' : ''} temperature-unit temperature-fahrenheit`}>°F</span>
           </div>
-          <span className="temperature-feelslike">{ currentWeather && currentWeather.current ? 'Feels like ' + currentWeather.current.feelslike + '°' : '' }</span>
+          <span className="temperature-feelslike">{currentWeather && currentWeather.current ? 'Feels like ' + currentWeather.current.feelslike + '°' : ''}</span>
         </div>
       </div>
       <section>
-        {  
+        {
           weatherDisplayMode === 'forecast' ?
-          <Forecast nmbOfDays="7" historical={currentWeather.historical} /> :
-          <HistoricWeather historical={currentWeather.historical} />
+            <Forecast nmbOfDays="7" historical={currentWeather.historical} />
+            : <HistoricWeather historical={currentWeather.historical} />
         }
         <div className="ui buttons mini">
-          <button 
-            onClick={() => { setWeatherDisplayMode('forecast' )}} 
-            className={`${weatherDisplayMode === 'forecast' ? '' : 'inverted' } secondary ui button`}>
+          <button
+            onClick={() => { setWeatherDisplayMode('forecast') }}
+            className={`${weatherDisplayMode === 'forecast' ? '' : 'inverted'} secondary ui button`}>
             Forecast
           </button>
-          <button 
-            onClick={() => { setWeatherDisplayMode('30days' )}} 
-            className={`${weatherDisplayMode === '30days' ? '' : 'inverted' } secondary ui button`}>
+          <button
+            onClick={() => { setWeatherDisplayMode('30days') }}
+            className={`${weatherDisplayMode === '30days' ? '' : 'inverted'} secondary ui button`}>
             Past 30-Days
           </button>
         </div>
