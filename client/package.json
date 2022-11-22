@@ -16,7 +16,7 @@
     "moment": "^2.24.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-scripts": "3.4.1",
+    "react-scripts": "5.0.1",
     "react-test-renderer": "^16.13.1",
     "semantic-ui-react": "^0.88.2",
     "sinon": "^9.0.2",
